@@ -98,15 +98,9 @@ Let's list the Databases we have in psql
 
 ```psql
 your_user_name=# \l
-                                 List of databases
-      Name      | Owner | Encoding |   Collate   |    Ctype    | Access privileges
-----------------+-------+----------+-------------+-------------+-------------------
- debug_politics | taka  | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
- hogs           | taka  | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
- hogwarts_crud  | taka  | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
- iparkmyself    | taka  | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
- moviehaus_db   | taka  | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
 ```
+
+![](images/dbs.png)
 
 Now let's _use_ that database we just created:
 
@@ -127,14 +121,7 @@ Now that we have a database, let's create a table (think of this like, "hey now 
 3. Never name a field `id`; always correlate it to the table name (e.g. `student_id`).
 4. Always check your company's style guide, or follow the convention; never create your own style.
 
-```sql
-CREATE TABLE instructors (
-  instructor_id SERIAL PRIMARY KEY NOT NULL,
-  name TEXT NOT NULL,
-  experience INT NOT NULL,
-  website VARCHAR(50)
-);
-```
+![](images/create_inst.png)
 
 When we paste this into psql:
 
@@ -178,14 +165,7 @@ Remembering the commands we just went over, students, try to guide the instructo
 
 Here's what that query should have looked like:
 
-```sql
-CREATE TABLE students (
-  student_id SERIAL PRIMARY KEY NOT NULL,
-        name TEXT NOT NULL,
-         age INT NOT NULL,
-     address VARCHAR(50)
-);
-```
+![](images/create_table.png)
 
 In psql that will look like:
 
@@ -231,12 +211,7 @@ Now, you try it for the other students, and pay attention to the order of Jack's
 
 You should come up with:
 
-```sql
-INSERT INTO students VALUES (DEFAULT, 'Jilly Cakes', 30, '123 Webdev Dr. Boston, MA');
-INSERT INTO students VALUES (DEFAULT, 'Johnny Bananas', 25, '555 Five St, Fivetowns, NY');
-INSERT INTO students VALUES (DEFAULT, 'Jackie Lackie', 101, '2 OldForThis Ct, Fivetowns, NY');
-INSERT INTO students VALUES (DEFAULT, 'Slaggy McRaggy', 28);
-```
+![](images/insert_students.png)
 
 In psql this should look like:
 
@@ -265,33 +240,17 @@ We can pass in what columns we want to look - like above - at or even get all ou
 SELECT * FROM table_name;
 ```
 
-For us, we can get all the records back:
+The above command will get all of the records back:
 
-```psql
-sei_r=# SELECT * FROM students;
- id |      name      | age |                      address
-----+----------------+-----+----------------------------------------------------
-  1 | Jack Sparrow   |  28 | 50 Main St, New York, NY
-  2 | Jilly Cakes    |  30 | 123 Webdev Dr. Boston, MA
-  3 | Johnny Bananas |  25 | 555 Five St, Fivetowns, NY
-  4 | Jackie Lackie  | 101 | 2 OldForThis Ct, Fivetowns, NY
-  5 | Slaggy McRaggy |  28 |
-(5 rows)
-```
+![](images/table.png)
 
 We can get just the name and ages of our students:
 
 ```psql
 sei_r=# SELECT name, age FROM students;
-      name      | age
-----------------+-----
- Jack Sparrow   |  28
- Jilly Cakes    |  30
- Johnny Bananas |  25
- Jackie Lackie  | 101
- Slaggy McRaggy |  28
-(5 rows)
 ```
+
+![](images/name_age.png)
 
 #### Getting more specific
 
@@ -301,53 +260,33 @@ Just like JavaScript, all of our comparison and boolean operators can do work fo
 
 ```psql
 sei_r=# SELECT name FROM students WHERE age < 100;
-      name
-----------------
- Jack Sparrow
- Jilly Cakes
- Johnny Bananas
- Slaggy McRaggy
-(4 rows)
 ```
+
+![](images/where.png)
 
 - How about the names of students ordered by age? Done:
 
 ```psql
 sei_r=# SELECT name, age FROM students ORDER BY age;
-      name      | age
-----------------+-----
- Johnny Bananas |  25
- Jack Sparrow   |  28
- Slaggy McRaggy |  28
- Jilly Cakes    |  30
- Jackie Lackie  | 101
-(5 rows)
 ```
 
-- How about reversed? Ok:
+![](images/order.png)
+
+- How about reversed?:
 
 ```psql
 sei_r=# SELECT name, age FROM students ORDER BY age DESC;
-      name      | age
-----------------+-----
- Jackie Lackie  | 101
- Jilly Cakes    |  30
- Jack Sparrow   |  28
- Slaggy McRaggy |  28
- Johnny Bananas |  25
-(5 rows)
 ```
+
+![](images/desc.png)
 
 - How about those who live in Fivetowns? We can find strings within strings too!
 
 ```psql
 sei_r=# SELECT * FROM students WHERE address LIKE '%Fivetowns%';
- id |      name      | age |                      address
-----+----------------+-----+----------------------------------------------------
-  3 | Johnny Bananas |  25 | 555 Five St, Fivetowns, NY
-  4 | Jackie Lackie  | 101 | 2 OldForThis Ct, Fivetowns, NY
-(2 rows)
 ```
+
+![](images/like.png)
 
 ## Updates to our database
 
@@ -365,16 +304,9 @@ sei_r=# UPDATE students SET address = '100 Main St., New York, NY' where address
 UPDATE 1
 
 sei_r=# SELECT * FROM students;
- id |      name      | age |                      address
-----+----------------+-----+----------------------------------------------------
-  1 | Jack Sparrow   |  28 | 50 Main St, New York, NY
-  2 | Jilly Cakes    |  30 | 123 Webdev Dr. Boston, MA
-  3 | Johnny Bananas |  25 | 555 Five St, Fivetowns, NY
-  4 | Jackie Lackie  | 101 | 2 OldForThis Ct, Fivetowns, NY
-  5 | Slaggy McRaggy |  28 |
-  6 | Miss Take      | 500 | 100 Main St., New York, NY
-(6 rows)
 ```
+
+![](images/update.png)
 
 But wait, actually, she just cancelled - no big!
 
@@ -383,16 +315,9 @@ sei_r=# DELETE FROM students where name = 'Miss Take';
 DELETE 1
 
 sei_r=# SELECT * FROM students;
- id |      name      | age |                      address
-----+----------------+-----+----------------------------------------------------
-  1 | Jack Sparrow   |  28 | 50 Main St, New York, NY
-  2 | Jilly Cakes    |  30 | 123 Webdev Dr. Boston, MA
-  3 | Johnny Bananas |  25 | 555 Five St, Fivetowns, NY
-  4 | Jackie Lackie  | 101 | 2 OldForThis Ct, Fivetowns, NY
-  5 | Slaggy McRaggy |  28 |
-(5 rows)
-
 ```
+
+![](images/delete.png)
 
 ## Practice
 
