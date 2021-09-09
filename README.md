@@ -118,8 +118,7 @@ Now that we have a database, let's create a table (think of this like, "hey now 
 
 1. Fields should _always_ be `lowercase` and `under_scored`
 2. SQL _keywords_ SHOULD ALWAYS BE IN CAPS
-3. Never name a field `id`; always correlate it to the table name (e.g. `student_id`).
-4. Always check your company's style guide, or follow the convention; never create your own style.
+3. Always check your company's style guide, or follow the convention; never create your own style.
 
 ![](images/create_inst.png)
 
@@ -130,7 +129,7 @@ sei_r=# CREATE TABLE instructors (
 sei_r(#  instructor_id  SERIAL PRIMARY KEY   NOT NULL,
 sei_r(#  name           TEXT          NOT NULL,
 sei_r(#  experience     INT           NOT NULL,
-sei_r(#  website        CHAR(50)
+sei_r(#  website        VARCHAR(50)
 sei_r(#  );
 CREATE TABLE
 ```
