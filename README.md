@@ -299,7 +299,7 @@ INSERT 0 1
 But oh no, we messed them up - Miss Take doesn't live at asdfasdfasdf, she lives at 100 Main St., New York, NY. Let's fix it:
 
 ```psql
-sei_r=# UPDATE students SET address = '100 Main St., New York, NY' where address = 'asdfasdfasdf';
+sei_r=# UPDATE students SET address = '100 Main St., New York, NY' WHERE address = 'asdfasdfasdf';
 UPDATE 1
 
 sei_r=# SELECT * FROM students;
@@ -310,7 +310,7 @@ sei_r=# SELECT * FROM students;
 But wait, actually, she just cancelled - no big!
 
 ```psql
-sei_r=# DELETE FROM students where name = 'Miss Take';
+sei_r=# DELETE FROM students WHERE name = 'Miss Take';
 DELETE 1
 
 sei_r=# SELECT * FROM students;
